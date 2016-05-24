@@ -3,27 +3,31 @@ using System.Collections;
 
 public class PaddleMove : MonoBehaviour {
 
-    // Use this for initialization
 
-    public bool portalActive;
+    Camera camera = new Camera();
+	// Use this for initialization
 	void Start () {
 
-        portalActive = false;
-	
+        camera = Camera.main;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x > -8.5) {
-            transform.Translate(-0.1f, 0, 0);
+
+        //Get touch position
+
+        Vector3 positionX = Input.GetTouch(0).position;
+        Vector3 positionNormal = transform.position;
+        Vector3 p = camera.ScreenToWorldPoint(positionX);
+        transform.position = new Vector3(p.x, positionNormal.y, 0);
+        //need for android build
+
+        if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x > -7) {
+            transform.Translate(-0.3f, 0, 0);
         }
-        if (Input.GetKey(KeyCode.RightArrow) && transform.position.x < 8.5)
+        if (Input.GetKey(KeyCode.RightArrow) && transform.position.x < 7)
         {
-            transform.Translate(0.1f, 0, 0);
+            transform.Translate(0.3f, 0, 0);
         }
-
-
     }
-
-   
 }
